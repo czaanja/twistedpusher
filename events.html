@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Events &mdash; TwistedPusher 1.21 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.21',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="TwistedPusher 1.21 documentation" href="index.html" />
+    <link rel="next" title="Channels" href="channels.html" />
+    <link rel="prev" title="Connection" href="connection.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="channels.html" title="Channels"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="connection.html" title="Connection"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">TwistedPusher 1.21 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="events">
+<h1>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="twistedpusher.events.Event">
+<em class="property">class </em><tt class="descclassname">twistedpusher.events.</tt><tt class="descname">Event</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#twistedpusher.events.Event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><strong>name</strong> &#8211; the event&#8217;s name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="twistedpusher.events.load_pusher_event">
+<tt class="descclassname">twistedpusher.events.</tt><tt class="descname">load_pusher_event</tt><big>(</big><em>raw_event</em><big>)</big><a class="headerlink" href="#twistedpusher.events.load_pusher_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an event from serialized JSON.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>raw_event</strong> (<em>str or unicode</em>) &#8211; a serialized JSON event</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parsed event</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Event</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises BadEventNameError:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">if raw_event had no event name field</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="twistedpusher.events.serialize_pusher_event">
+<tt class="descclassname">twistedpusher.events.</tt><tt class="descname">serialize_pusher_event</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#twistedpusher.events.serialize_pusher_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an event to serialized JSON. Ignores all fields except <tt class="docutils literal"><span class="pre">name</span></tt>, <tt class="docutils literal"><span class="pre">data</span></tt>, and <tt class="docutils literal"><span class="pre">channel</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<em>Event</em>) &#8211; the event to serialize</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the event as serialized JSON</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises BadEventNameError:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">if the event has no name set</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="twistedpusher.events.EventEmitter">
+<em class="property">class </em><tt class="descclassname">twistedpusher.events.</tt><tt class="descname">EventEmitter</tt><a class="headerlink" href="#twistedpusher.events.EventEmitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>EventEmitter is a widely-used base class that provides an interface to produce and consume named events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">EventEmitter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">event</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">emit_event</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;this_is_an_event&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Simple event dispatching.
+Listeners receive Event objects.</p>
+<dl class="method">
+<dt id="twistedpusher.events.EventEmitter.bind">
+<tt class="descname">bind</tt><big>(</big><em>event_name</em>, <em>listener</em><big>)</big><a class="headerlink" href="#twistedpusher.events.EventEmitter.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bind a listener to a specific event.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>event_name</strong> (<em>str or unicode</em>) &#8211; name of the event to bind to</li>
+<li><strong>listener</strong> &#8211; function that will receive those events</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises ValueError:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">if listener is not callable</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="twistedpusher.events.EventEmitter.bind_all">
+<tt class="descname">bind_all</tt><big>(</big><em>listener</em><big>)</big><a class="headerlink" href="#twistedpusher.events.EventEmitter.bind_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bind a listener to all events produced.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>listener</strong> &#8211; function that will receive all events</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises ValueError:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">if listener is not a callable</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="twistedpusher.events.EventEmitter.emit_event">
+<tt class="descname">emit_event</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#twistedpusher.events.EventEmitter.emit_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatch an event to registered listeners. Mostly for internal use.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<em>Event</em>) &#8211; event object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="twistedpusher.events.EventEmitter.unbind">
+<tt class="descname">unbind</tt><big>(</big><em>event_name</em>, <em>listener</em><big>)</big><a class="headerlink" href="#twistedpusher.events.EventEmitter.unbind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unbind a listener from a specific event.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>event_name</strong> (<em>str or unicode</em>) &#8211; name of the event that the listener was bound to</li>
+<li><strong>listener</strong> &#8211; function that will no longer receive events</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Warns:</th><td class="field-body"><p class="first last">if listener to be removed is not found</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="twistedpusher.events.EventEmitter.unbind_all">
+<tt class="descname">unbind_all</tt><big>(</big><em>listener</em><big>)</big><a class="headerlink" href="#twistedpusher.events.EventEmitter.unbind_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unbind a global listener.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>listener</strong> &#8211; function that will no longer be called with all events</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Warns:</th><td class="field-body">if specified global listener to be removed is not found</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="connection.html"
+                        title="previous chapter">Connection</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="channels.html"
+                        title="next chapter">Channels</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/events.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="channels.html" title="Channels"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="connection.html" title="Connection"
+             >previous</a> |</li>
+        <li><a href="index.html">TwistedPusher 1.21 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, socillion.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Connection &mdash; TwistedPusher 1.21 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.21',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="TwistedPusher 1.21 documentation" href="index.html" />
+    <link rel="next" title="Events" href="events.html" />
+    <link rel="prev" title="Pusher Client" href="client.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="events.html" title="Events"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="Pusher Client"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">TwistedPusher 1.21 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-twistedpusher.connection">
+<span id="connection"></span><h1>Connection<a class="headerlink" href="#module-twistedpusher.connection" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="twistedpusher.connection.Connection">
+<em class="property">class </em><tt class="descclassname">twistedpusher.connection.</tt><tt class="descname">Connection</tt><big>(</big><em>transport</em>, <em>on_channel_event</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#twistedpusher.connection.Connection" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>state</strong> &#8211; current connection state, all possibilities enumerated in <tt class="docutils literal"><span class="pre">CONNECTION_STATES</span></tt></li>
+<li><strong>socket_id</strong> &#8211; Pusher socket ID of currently established connection</li>
+<li><strong>transport</strong> &#8211; <tt class="docutils literal"><span class="pre">IPusherTransport</span></tt> provider</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">Possible states:</th>
+</tr>
+<tr class="row-even"><th class="head">State</th>
+<th class="head">When it is triggered</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>initialized</td>
+<td>initial state, not emitted</td>
+</tr>
+<tr class="row-even"><td>connecting</td>
+<td>when attempting to connect</td>
+</tr>
+<tr class="row-odd"><td>unavailable</td>
+<td>after failing to connect for a while</td>
+</tr>
+<tr class="row-even"><td>connected</td>
+<td>on a fully established connection</td>
+</tr>
+<tr class="row-odd"><td>disconnected</td>
+<td>on intentionally disconnecting</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">Emits the following events:</th>
+</tr>
+<tr class="row-even"><th class="head">Event</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>States</td>
+<td>Listed above. They have an attribute &#8216;previous&#8217; with the previous state</td>
+</tr>
+<tr class="row-even"><td>state_change</td>
+<td>duplicate of the states, with attributes &#8216;current&#8217; and &#8216;previous&#8217;.</td>
+</tr>
+<tr class="row-odd"><td>connecting_in</td>
+<td>if attempting to connect, how long the delay is until next attempt. Has attribute &#8216;delay&#8217;.</td>
+</tr>
+<tr class="row-even"><td>error</td>
+<td>Pusher errors, data includes fields &#8216;code&#8217; and maybe &#8216;message&#8217;.</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>clock</strong> &#8211; </li>
+<li><strong>transport</strong> &#8211; <tt class="docutils literal"><span class="pre">IPusherTransport</span></tt> provider</li>
+<li><strong>on_channel_event</strong> &#8211; callback to send channel events</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="twistedpusher.connection.Connection.send_event">
+<tt class="descname">send_event</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#twistedpusher.connection.Connection.send_event" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<em>Event</em>) &#8211; the event to send</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises ConnectionError:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">if attempting to send an event while not connected.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-twistedpusher.transport"></span><dl class="class">
+<dt id="twistedpusher.transport.Transport">
+<em class="property">class </em><tt class="descclassname">twistedpusher.transport.</tt><tt class="descname">Transport</tt><big>(</big><em>factory</em>, <em>endpoint</em>, <em>on_pusher_event=None</em>, <em>reactor=None</em><big>)</big><a class="headerlink" href="#twistedpusher.transport.Transport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the low-level details of a connection to Pusher.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>state</strong> &#8211; the current transport state</li>
+<li><strong>prev_state</strong> &#8211; previous state</li>
+<li><strong>on_event</strong> &#8211; function to call with all Pusher events received from the protocol</li>
+<li><strong>endpoint</strong> &#8211; the endpoint to connect with</li>
+<li><strong>factory</strong> &#8211; the factory that builds <cite>IPusherProtocol</cite> objects</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">Possible states:</th>
+</tr>
+<tr class="row-even"><th class="head">State</th>
+<th class="head">When it is triggered</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>disconnected</td>
+<td>once the connection is broken</td>
+</tr>
+<tr class="row-even"><td>connecting</td>
+<td>after beginning a connection attempt</td>
+</tr>
+<tr class="row-odd"><td>connected</td>
+<td>if a connection attempt succeeds</td>
+</tr>
+<tr class="row-even"><td>reconnecting</td>
+<td>indicates to reconnect on disconnect</td>
+</tr>
+<tr class="row-odd"><td>disconnecting</td>
+<td>prevents reconnecting on disconnect</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">Emits the following events:</th>
+</tr>
+<tr class="row-even"><th class="head">Event</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>started_connecting</td>
+<td>the transport began trying to connect</td>
+</tr>
+<tr class="row-even"><td>connecting_in</td>
+<td>how long until the transport will try to connect again, has a non-zero <tt class="docutils literal"><span class="pre">delay</span></tt> attribute</td>
+</tr>
+<tr class="row-odd"><td>connected</td>
+<td>a connection was established</td>
+</tr>
+<tr class="row-even"><td>disconnected</td>
+<td>the connection is now broken (not triggered by failure, only loss)</td>
+</tr>
+</tbody>
+</table>
+<p>Manages the transport with auto-reconnecting and state events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><p class="first">factory: a factory that builds IPusherProtocol objects</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>endpoint</strong> &#8211; an endpoint to connect with</li>
+<li><strong>on_pusher_event</strong> &#8211; function to call with received Pusher events</li>
+<li><strong>reactor</strong> &#8211; optional IReactorTime provider, defaults to twisted.internet.reactor</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="twistedpusher.transport.Transport.reconnect">
+<tt class="descname">reconnect</tt><big>(</big><big>)</big><a class="headerlink" href="#twistedpusher.transport.Transport.reconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect and then connect again.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="twistedpusher.transport.Transport.send_event">
+<tt class="descname">send_event</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#twistedpusher.transport.Transport.send_event" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<em>Event</em>) &#8211; the event to send</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="twistedpusher.websocket.PusherWebsocketProtocol">
+<em class="property">class </em><tt class="descclassname">twistedpusher.websocket.</tt><tt class="descname">PusherWebsocketProtocol</tt><a class="headerlink" href="#twistedpusher.websocket.PusherWebsocketProtocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pusher websocket connection.</p>
+<dl class="method">
+<dt id="twistedpusher.websocket.PusherWebsocketProtocol.onClose">
+<tt class="descname">onClose</tt><big>(</big><em>wasClean</em>, <em>code</em>, <em>reason</em><big>)</big><a class="headerlink" href="#twistedpusher.websocket.PusherWebsocketProtocol.onClose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle Websocket connection shutdowns.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="twistedpusher.websocket.PusherWebsocketProtocol.onMessage">
+<tt class="descname">onMessage</tt><big>(</big><em>payload</em>, <em>isBinary</em><big>)</big><a class="headerlink" href="#twistedpusher.websocket.PusherWebsocketProtocol.onMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive websocket messages.
+:type isBinary: bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="twistedpusher.websocket.PusherWebsocketProtocol.send_event">
+<tt class="descname">send_event</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#twistedpusher.websocket.PusherWebsocketProtocol.send_event" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="client.html"
+                        title="previous chapter">Pusher Client</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="events.html"
+                        title="next chapter">Events</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/connection.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="events.html" title="Events"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="Pusher Client"
+             >previous</a> |</li>
+        <li><a href="index.html">TwistedPusher 1.21 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, socillion.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

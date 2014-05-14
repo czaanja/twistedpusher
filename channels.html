@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Channels &mdash; TwistedPusher 1.21 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.21',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="TwistedPusher 1.21 documentation" href="index.html" />
+    <link rel="next" title="Errors" href="errors.html" />
+    <link rel="prev" title="Events" href="events.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="errors.html" title="Errors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="events.html" title="Events"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">TwistedPusher 1.21 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="channels">
+<h1>Channels<a class="headerlink" href="#channels" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="twistedpusher.channel.buildChannel">
+<tt class="descclassname">twistedpusher.channel.</tt><tt class="descname">buildChannel</tt><big>(</big><em>channel_name</em>, <em>connection</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#twistedpusher.channel.buildChannel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a channel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>channel_name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the channel to create</li>
+<li><strong>connection</strong> &#8211; a <a class="reference internal" href="connection.html#twistedpusher.connection.Connection" title="twistedpusher.connection.Connection"><tt class="xref py py-class docutils literal"><span class="pre">Connection</span></tt></a> instance to pass to the channel</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the created channel</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Channel or PrivateChannel or PresenceChannel</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="twistedpusher.channel.Channel">
+<em class="property">class </em><tt class="descclassname">twistedpusher.channel.</tt><tt class="descname">Channel</tt><big>(</big><em>channel_name</em>, <em>connection</em>, <em>json_data=False</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#twistedpusher.channel.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a Pusher channel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>channel_name</strong> (<em>str or unicode</em>) &#8211; channel to subscribe to</li>
+<li><strong>connection</strong> &#8211; an IPusherConnection provider</li>
+<li><strong>json_data</strong> &#8211; optional flag to enable parsing user event data as JSON</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises BadChannelNameError:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">if connection is not a ConnectionManager or the Pusher channel name is invalid</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="twistedpusher.channel.Channel.subscribe">
+<tt class="descname">subscribe</tt><big>(</big><big>)</big><a class="headerlink" href="#twistedpusher.channel.Channel.subscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subscribe to the Pusher channel.</p>
+<p>Users should not call this. Use <tt class="docutils literal"><span class="pre">Pusher.subscribe()</span></tt> instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="twistedpusher.channel.Channel.unsubscribe">
+<tt class="descname">unsubscribe</tt><big>(</big><big>)</big><a class="headerlink" href="#twistedpusher.channel.Channel.unsubscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unsubscribe from the Pusher channel.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="twistedpusher.channel.PrivateChannel">
+<em class="property">class </em><tt class="descclassname">twistedpusher.channel.</tt><tt class="descname">PrivateChannel</tt><big>(</big><em>channel_name</em>, <em>connection</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#twistedpusher.channel.PrivateChannel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="twistedpusher.channel.PresenceChannel">
+<em class="property">class </em><tt class="descclassname">twistedpusher.channel.</tt><tt class="descname">PresenceChannel</tt><big>(</big><em>channel_name</em>, <em>connection</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#twistedpusher.channel.PresenceChannel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="events.html"
+                        title="previous chapter">Events</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="errors.html"
+                        title="next chapter">Errors</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/channels.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="errors.html" title="Errors"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="events.html" title="Events"
+             >previous</a> |</li>
+        <li><a href="index.html">TwistedPusher 1.21 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, socillion.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
