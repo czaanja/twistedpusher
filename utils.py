@@ -68,7 +68,10 @@ class Timeout(object):
     def start(self, *args, **kwargs):
         """Start the timer. `args` and `kwargs` are passed to the callback."""
         self.timed_out = False
-        self._timer = self.reactor.callLater(self.duration, self._trigger, *args, **kwargs)
+        if not self._timer:
+            self._timer = self.reactor.callLater(self.duration, self._trigger, *args, **kwargs)
+        else:
+            log.debug('Timeout started while already running')
 
     def stop(self):
         """Stop the timer."""

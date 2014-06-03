@@ -8,6 +8,7 @@ from twistedpusher.channel import Channel, buildChannel
 from twistedpusher.test.helpers import FakeEvent
 from twistedpusher.errors import BadChannelNameError
 from twistedpusher.connection import Connection
+from twistedpusher.test.helpers import TEST_TIMEOUT
 
 CHANNEL_NAME = 'chan_name'
 SUBSCRIBE_EVENT = {'data': {'channel': CHANNEL_NAME}, 'name': 'pusher:subscribe'}
@@ -15,7 +16,7 @@ UNSUBSCRIBE_EVENT = {'data': {'channel': CHANNEL_NAME}, 'name': 'pusher:unsubscr
 
 
 class ChannelTestCase(unittest.TestCase):
-    timeout = 0.1
+    timeout = TEST_TIMEOUT
 
     def setUp(self):
         self.conn = mock.Mock(spec=Connection)
@@ -53,7 +54,7 @@ class ChannelTestCase(unittest.TestCase):
 
 class ChannelEventEmitterTestCase(unittest.TestCase):
     """This tests against Channel and not ChannelEventEmitter"""
-    timeout = 0.1
+    timeout = TEST_TIMEOUT
 
     def setUp(self):
         self.chan = Channel('a_channel', mock.Mock(spec=Connection))
@@ -105,6 +106,8 @@ class ChannelEventEmitterTestCase(unittest.TestCase):
 
 
 class BuilderTestCase(unittest.TestCase):
+    timeout = TEST_TIMEOUT
+
     def setUp(self):
         self.conn = mock.Mock(spec=Connection)
 

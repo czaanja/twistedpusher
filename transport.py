@@ -69,11 +69,9 @@ class Transport(EventEmitter, Service):
         assert callable(on_pusher_event)
         self.on_event = on_pusher_event
 
-        if reactor:
-            self.reactor = reactor
-        else:
+        if not reactor:
             from twisted.internet import reactor
-            self.reactor = reactor
+        self.reactor = reactor
 
         self.factory = factory
         self.endpoint = endpoint

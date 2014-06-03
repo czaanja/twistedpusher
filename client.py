@@ -4,10 +4,12 @@ import logging
 import warnings
 from twisted.application.service import MultiService
 from twisted.internet.endpoints import clientFromString
+from zope.interface import implementer
 
 from twistedpusher.connection import Connection
 from twistedpusher import channel, websocket
 from twistedpusher.events import EventEmitter
+from twistedpusher.interfaces import IPusherClientService, IPusherClient
 
 log = logging.getLogger(__name__)
 
@@ -16,9 +18,10 @@ log = logging.getLogger(__name__)
 # http://autobahn.ws/python/reference.html
 # http://autobahn.ws/python/examples.html
 
-VERSION = '1.3.0'
+VERSION = '1.3.1'
 
 
+@implementer(IPusherClientService)
 class PusherService(MultiService, EventEmitter):
     protocol_version = 7
     host = 'ws.pusherapp.com'
@@ -55,7 +58,7 @@ class PusherService(MultiService, EventEmitter):
             url=PusherService._build_url(key, encrypted),
             useragent='{0}/{1}'.format(PusherService.client_name, VERSION),
             **kwargs)
-        endpoint = self.__class__._build_endpoint(endpoint_string, encrypted)
+        endpoint = self.__class__._build_endpoint(endpoint_string, encrypted, reactor=reactor)
 
         self.connection = Connection(factory, endpoint, self._on_event, reactor=reactor)
         self.addService(self.connection)
@@ -168,8 +171,9 @@ class PusherService(MultiService, EventEmitter):
             path)
 
     @classmethod
-    def _build_endpoint(cls, endpoint_string=None, encrypted=True, timeout=5, host=None):
-        from twisted.internet import reactor
+    def _build_endpoint(cls, endpoint_string=None, encrypted=True, timeout=5, host=None, reactor=None):
+        if not reactor:
+            from twisted.internet import reactor
         host = host or cls.host
         if endpoint_string:
             endpoint = clientFromString(reactor, endpoint_string)
@@ -184,6 +188,7 @@ class PusherService(MultiService, EventEmitter):
         return endpoint
 
 
+@implementer(IPusherClient)
 class Pusher(PusherService):
     def __init__(self, key, encrypted=True, endpoint_client_string=None, **kwargs):
         """

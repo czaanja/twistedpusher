@@ -7,10 +7,11 @@ from zope.interface.verify import verifyClass, verifyObject
 
 from twistedpusher.websocket import PusherWebsocketProtocol
 from twistedpusher.interfaces import IPusherProtocol
+from twistedpusher.test.helpers import TEST_TIMEOUT
 
 
 class WebsocketProtocolTestCase(unittest.TestCase):
-    timeout = 0.1
+    timeout = TEST_TIMEOUT
 
     def setUp(self):
         self.m = mock.Mock()

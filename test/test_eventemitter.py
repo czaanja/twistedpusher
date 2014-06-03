@@ -6,11 +6,11 @@ from zope.interface.verify import verifyClass, verifyObject
 
 from twistedpusher.interfaces import IEventEmitter
 from twistedpusher.events import EventEmitter
-from twistedpusher.test.helpers import FakeEvent
+from twistedpusher.test.helpers import FakeEvent, TEST_TIMEOUT
 
 
 class EventEmitterTestCase(unittest.TestCase):
-    timeout = 1
+    timeout = TEST_TIMEOUT
 
     def setUp(self):
         self.em = EventEmitter()

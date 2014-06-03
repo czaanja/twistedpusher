@@ -149,8 +149,6 @@ class Connection(EventEmitter, service.MultiService):
     #####     IO     #####
     ######################
 
-    # drop send_event and just use transport's send_event?
-    # Issue with that is it's necessary to be connected first...
     def send_event(self, event):
         """
         :param event: the event to send

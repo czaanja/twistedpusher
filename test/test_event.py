@@ -5,10 +5,11 @@ from twisted.trial import unittest
 
 from twistedpusher.events import Event, load_pusher_event, serialize_pusher_event
 from twistedpusher.errors import BadEventNameError
+from twistedpusher.test.helpers import TEST_TIMEOUT
 
 
 class EventTestCase(unittest.TestCase):
-    timeout = 0.1
+    timeout = TEST_TIMEOUT
 
     def test_constructor_name(self):
         """Test constructor with only name field."""
@@ -28,7 +29,7 @@ class EventTestCase(unittest.TestCase):
 
 
 class LoadPusherEventTestCase(unittest.TestCase):
-    timeout = 0.1
+    timeout = TEST_TIMEOUT
 
     def test_load_with_hashed_json_data(self):
         """Load reads the data field of pusher events correctly if it's json encoded on a 2nd pass."""
@@ -88,7 +89,7 @@ class LoadPusherEventTestCase(unittest.TestCase):
 
 # could replace the ev/expected pairs here with a single dict after adding auto-convert for event->name fields
 class SerializePusherEventTestCase(unittest.TestCase):
-    timeout = 0.1
+    timeout = TEST_TIMEOUT
 
     def test_serialize_extra_keys(self):
         """Serialize ignores unexpected extra fields."""

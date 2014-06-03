@@ -12,7 +12,7 @@ TIMEOUT_TIME = 60
 TEST_TIMEOUT = 0.1
 
 
-# todo replace this and the various dicts in tests with something better
+# todo improve the FakeEvent/random dict usages... could probably just use Events.
 class FakeEvent(object):
     def __init__(self, **kwargs):
         """:rtype: Event"""
@@ -40,7 +40,7 @@ class FakeProtocol(object):
         # can be called to fake a disconnect
         self.on_connection_lost = defer.Deferred()
         # called with what it was set to
-        self.when_on_event_set = defer.Deferred()
+        self.on_event_set = defer.Deferred()
 
         self._on_event = None
         self.send_event = mock.Mock()
@@ -53,7 +53,7 @@ class FakeProtocol(object):
     @on_event.setter
     def on_event(self, func):
         self._on_event = func
-        self.when_on_event_set.callback(func)
+        self.on_event_set.callback(func)
 
 
 def make_mock_endpoint():
